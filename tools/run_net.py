@@ -18,6 +18,7 @@ def main():
     args = parse_args()
     cfg = load_config(args)
     cfg.DEMO.WEBCAM = 0
+    cfg.NUM_GPUS = 1
     # Perform training.
     if cfg.TRAIN.ENABLE:
         launch_job(cfg=cfg, init_method=args.init_method, func=train)
