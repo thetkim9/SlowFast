@@ -4,14 +4,15 @@ RUN apt-get update
 RUN apt-get install -y build-essential
 RUN apt-get -y install wget
 RUN conda install pytorch==1.2.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch
-RUN conda install -c anaconda 'git+https://github.com/facebookresearch/fvcore'
-RUN conda install -c anaconda 'git+https://github.com/facebookresearch/fvcore.git'
-RUN conda install -c anaconda 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+RUN conda install git pip
+RUN pip install 'git+https://github.com/facebookresearch/fvcore'
+RUN pip install 'git+https://github.com/facebookresearch/fvcore.git'
+RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
 RUN git clone https://github.com/facebookresearch/detectron2 detectron2_repo
-RUN conda install -e detectron2_repo
-RUN conda install -c anaconda simplejson
+RUN pip install -e detectron2_repo
+RUN pip install simplejson
 RUN conda install av -c conda-forge
-RUN conda install -c anaconda psutil
+RUN pip install psutil
 RUN conda install -c anaconda flask
 RUN conda install -c anaconda "Pillow<7"
 RUN conda install -c anaconda requests
