@@ -3,7 +3,7 @@ ENV LANG C.UTF-8
 RUN apt-get update
 RUN apt-get install -y build-essential
 RUN apt-get -y install wget
-RUN conda install pytorch==1.3.0 torchvision==0.4.0 cudatoolkit=9.2 -c pytorch
+RUN conda install pytorch==1.3.0 torchvision cudatoolkit=9.2 -c pytorch
 RUN conda install -c anaconda flask
 RUN conda install -c anaconda "Pillow<7"
 RUN conda install -c anaconda requests
