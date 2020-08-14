@@ -19,6 +19,8 @@ def main():
     cfg = load_config(args)
     cfg.DEMO.WEBCAM = 0
     cfg.NUM_GPUS = 1
+    cfg.TRAIN.ENABLE = False
+    cfg.TEST.ENABLE = False
     # Perform training.
     if cfg.TRAIN.ENABLE:
         launch_job(cfg=cfg, init_method=args.init_method, func=train)

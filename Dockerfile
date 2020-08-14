@@ -26,9 +26,10 @@ RUN conda install av -c conda-forge
 RUN pip install psutil
 RUN conda install -c anaconda numpy
 RUN python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+COPY setup.py .
+RUN python setup.py build develop
 COPY . .
 RUN export PYTHONPATH=./slowfast:$PYTHONPATH
-RUN python setup.py build develop
 EXPOSE 80
 CMD python tools/run_net.py --cfg configs/Kinetics/C2D_8x8_R50.yaml
 #CMD python server.py
