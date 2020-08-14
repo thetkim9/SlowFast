@@ -28,6 +28,17 @@ RUN conda install -c anaconda numpy
 RUN python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 COPY setup.py .
 RUN python setup.py build develop
+RUN wget https://research.google.com/ava/download/ava_train_v2.1.csv
+RUN wget https://research.google.com/ava/download/ava_val_v2.1.csv
+RUN wget https://research.google.com/ava/download/ava_action_list_v2.1_for_activitynet_2018.pbtxt
+RUN wget https://research.google.com/ava/download/ava_train_excluded_timestamps_v2.1.csv
+RUN wget https://research.google.com/ava/download/ava_val_excluded_timestamps_v2.1.csv
+RUN wget https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_test_predicted_boxes.csv
+RUN wget https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_val_predicted_boxes.csv
+RUN https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_train_predicted_boxes.csv
+RUN wget https://dl.fbaipublicfiles.com/pyslowfast/model_zoo/ava/pretrain/SLOWFAST_64x2_R101_50_50.pkl
+RUN mv SLOWFAST_64x2_R101_50_50.pkl demo/AVA
+RUN mv ava_test_predicted_boxes.csv demo/AVA
 COPY . .
 RUN export PYTHONPATH=./slowfast:$PYTHONPATH
 EXPOSE 80

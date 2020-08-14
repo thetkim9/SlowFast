@@ -8,7 +8,7 @@ TRAIN:
   CHECKPOINT_FILE_PATH: ./SLOWFAST_32x2_R101_50_50.pkl  #path to pretrain model
   CHECKPOINT_TYPE: pytorch
 DATA:
-  NUM_FRAMES: 32
+  NUM_FRAMES: 64
   SAMPLING_RATE: 2
   TRAIN_JITTER_SCALES: [256, 320]
   TRAIN_CROP_SIZE: 224
@@ -72,7 +72,7 @@ TENSORBOARD:
     TOPK: 2
 DEMO:
   ENABLE: True
-  LABEL_FILE_PATH:  # Add local label file path here.
+  LABEL_FILE_PATH: './ava_action_list_v2.1_for_activitynet_2018.pbtxt'
   WEBCAM: 0
   DETECTRON2_CFG: "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"
   DETECTRON2_WEIGHTS: detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl
