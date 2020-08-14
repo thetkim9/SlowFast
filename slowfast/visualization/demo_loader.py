@@ -124,6 +124,7 @@ class VideoManager:
             if self.output_file is None:
                 cv2.imshow("SlowFast", frame)
             else:
+                print("?")
                 self.output_file.write(frame)
 
     def clean(self):
