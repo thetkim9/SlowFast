@@ -27,8 +27,8 @@ RUN conda install gxx_linux-64=7.3
 RUN apt -y install git
 RUN conda install -c anaconda cython
 COPY . .
-export PYTHONPATH=./slowfast:$PYTHONPATH
-python setup.py build develop
+RUN export PYTHONPATH=./slowfast:$PYTHONPATH
+RUN python setup.py build develop
 EXPOSE 80
 CMD python tools/run_net.py --cfg configs/Kinetics/C2D_8x8_R50.yaml
 #CMD python server.py
