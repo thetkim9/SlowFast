@@ -24,7 +24,9 @@ RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=Pyt
 RUN pip install simplejson
 RUN conda install av -c conda-forge
 RUN pip install psutil
+RUN conda install -c anaconda numpy
 RUN git clone https://github.com/facebookresearch/detectron2 detectron2_repo
+RUN python -m "import os; path = os.path.abspath(a_module.__file__);"
 RUN pip install -e detectron2_repo
 COPY . .
 RUN export PYTHONPATH=./slowfast:$PYTHONPATH
