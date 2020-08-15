@@ -267,7 +267,7 @@ def load_checkpoint(
             #checkpoint = torch.load(f, map_location=device, encoding='latin1')
             import pickle
             obj = f.read()
-            weights = pickle.loads(obj, encoding='latin1')
+            checkpoint = pickle.loads(obj, encoding='latin1')
         model_state_dict_3d = (
             model.module.state_dict() if data_parallel else model.state_dict()
         )
