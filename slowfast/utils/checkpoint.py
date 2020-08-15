@@ -267,9 +267,8 @@ def load_checkpoint(
             import pickle
             obj = f.read()
             weights = pickle.loads(obj, encoding='latin1')
-            with PathManager.open("temp.pkl", "rb") as f:
-                torch.save(weights, f)
-                checkpoint = torch.load(f, map_location=device, encoding='latin1')
+            torch.save(weights, "temp.pkl")
+            checkpoint = torch.load(f, map_location=device, encoding='latin1')
         model_state_dict_3d = (
             model.module.state_dict() if data_parallel else model.state_dict()
         )
