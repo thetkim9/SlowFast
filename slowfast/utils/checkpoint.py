@@ -262,7 +262,7 @@ def load_checkpoint(
     else:
         # Load the checkpoint on CPU to avoid GPU mem spike.
         with PathManager.open(path_to_checkpoint, "rb") as f:
-            checkpoint = torch.load(f, map_location="cpu")
+            checkpoint = torch.load(f, map_location="cuda:0")
         model_state_dict_3d = (
             model.module.state_dict() if data_parallel else model.state_dict()
         )
