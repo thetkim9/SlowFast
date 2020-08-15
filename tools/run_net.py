@@ -24,6 +24,7 @@ def main():
     cfg.TRAIN.ENABLE = False
     cfg.TEST.ENABLE = False
     cfg.DEMO.OUTPUT_FILE = "demo_test/demo_out.mp4"
+    cfg.DEMO.ENABLE = True
     # Perform training.
     if cfg.TRAIN.ENABLE:
         launch_job(cfg=cfg, init_method=args.init_method, func=train)
