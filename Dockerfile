@@ -40,5 +40,5 @@ RUN wget https://dl.fbaipublicfiles.com/pyslowfast/model_zoo/ava/pretrain/SLOWFA
 COPY . .
 RUN export PYTHONPATH=./slowfast:$PYTHONPATH
 EXPOSE 80
-CMD python tools/run_net.py --cfg configs/Kinetics/C2D_8x8_R50.yaml
+CMD python tools/run_net.py --cfg demo/AVA/SLOWFAST_32x2_R101_50_50.yaml
 #CMD python server.py
