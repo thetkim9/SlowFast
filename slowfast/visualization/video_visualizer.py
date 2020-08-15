@@ -670,5 +670,6 @@ class VideoVisualizer:
         print(len(thres_array))
         print(thres_array)
         print(common_class_ids)
+        thres_array.append(0.3)
         thres_array[common_class_ids] = self.thres
         self.thres = torch.from_numpy(thres_array)
