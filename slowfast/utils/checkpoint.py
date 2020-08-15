@@ -264,7 +264,7 @@ def load_checkpoint(
         with PathManager.open(path_to_checkpoint, "rb") as f:
             print(f)
             device = torch.device('cpu')
-            checkpoint = torch.load(f, map_location=device)
+            checkpoint = torch.load(f, map_location=device, encoding='latin1')
         model_state_dict_3d = (
             model.module.state_dict() if data_parallel else model.state_dict()
         )
