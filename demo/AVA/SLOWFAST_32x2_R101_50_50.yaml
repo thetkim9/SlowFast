@@ -69,7 +69,7 @@ RNG_SEED: 0
 OUTPUT_DIR: .
 DEMO:
   ENABLE: True
-  LABEL_FILE_PATH:  "./demo/AVA/ava.pbtxt"
+  LABEL_FILE_PATH:  "./demo/AVA/ava.json"
   WEBCAM: 0
   DETECTRON2_CFG: "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"
   DETECTRON2_WEIGHTS: detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl
