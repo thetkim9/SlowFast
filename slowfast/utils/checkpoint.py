@@ -262,7 +262,6 @@ def load_checkpoint(
     else:
         # Load the checkpoint on CPU to avoid GPU mem spike.
         with PathManager.open(path_to_checkpoint, "rb") as f:
-            print(f)
             device = torch.device('cpu')
             #import pickle
             #obj = f.read()
