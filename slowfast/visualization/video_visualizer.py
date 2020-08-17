@@ -672,6 +672,7 @@ class VideoVisualizer:
         #print(common_class_ids)
         #import numpy
         #thres_array = numpy.append(thres_array, 0.3)
+        print(common_class_ids)
         for i in range(len(common_class_ids)):
             common_class_ids[i] -= 1
         thres_array[common_class_ids] = self.thres
