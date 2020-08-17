@@ -448,7 +448,9 @@ class VideoVisualizer:
                 mask = pred >= self.thres
                 #print(mask)
                 top_scores.append(pred[mask].tolist())
-                top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist() + 1
+                top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+                for i in range(len(top_class)):
+                    top_class[i] += 1
                 print(top_class)
                 top_classes.append(top_class)
 
