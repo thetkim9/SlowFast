@@ -1,0 +1,106 @@
+<HTML>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <title>tpn</title>
+        <script>
+            function readURL(input) {
+              if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  $('#preload')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+                document.getElementById("preload").style.visibility = "visible";
+              }
+            }
+        </script>
+    </head>
+    <body>
+        <div class = "container">
+            <div class="jumbotron mt-3">
+
+                <h1>Action Recognition from Video</h1>
+                <A>Git Hub Repo : </A> <A href="https://github.com/thetkim9/TPN"> TPN</A>
+                <br>
+
+                <hr class="solid">
+
+                <h3>Instructions</h3>
+                <p>Fully supported on chrome only</p>
+                <p>The pretrained model mainly recognizes interaction between object and human such as throwing.</p>
+                <p>Grant access to camera and microphone to use the 'webcam' option</p>
+                <p>Operation generally takes around 20 seconds (tested on 9 second video, 0 pending requests ahead)</p>
+                <p>The time taken may vary depending on the length of your video and the number of pending requests</p>
+                <br>
+                <p>Please select input type:</p>
+                <input type="radio" id="mp4" name="input" value="mp4" checked>
+                <label for="mp4">mp4</label>
+                <input type="radio" id="webcam" name="input" value="webcam">
+                <label for="webcam">webcam</label>
+                <div id = 'inputVideo' >
+                    <div id="mp40" style="position:relative; top:0; left:0;">
+                        <label for="source">insert a video : </label>
+                        <input type = 'file' id = 'source' onchange="readURL(this);" style="margin-right: 10px; margin-bottom: 10px;">
+                    </div>
+                    <div id="webcam0" style="position:relative; top:0; left:0;">
+                        <h4>Preview</h4>
+                        <video id="preview" width="160" height="120" autoplay muted></video><br>
+                        <input type="button" id="startButton" class="button" value="start recording">
+                        <input type="button" id="stopButton" class="button" value="stop recording">
+                    </div>
+                </div><br>
+                <div id="operate">
+                    <input type="submit" id = "submit" class="btn btn-primary btn-lg" style="margin-left: auto;" value="Submit Request">
+                    <input type="submit" id = "cancel" class="btn btn-primary btn-lg" style="margin-left: auto;" value="Cancel Request"
+                    disabled="disabled">
+                </div><br>
+                <progress id="progress_bar" value="0" max="100"> </progress>
+                <p id="load">loading<span id="dots">.</span></p>
+                <p>time spent: <span id="time">0</span>s</p>
+                <p>Number of pending requests ahead: <span id="pending">0</span></p>
+                <div id ='resultBox' style="margin-left: auto; margin-right: auto;">
+                    <p id='errorbox'></p>
+                    <span>Input: </span>
+                    <br>
+                    <video id="preload" width="320" height="240" controls>
+                        <source src="{{ url_for('static', filename='sampleIn.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <br>
+                    <span>Output: </span>
+                    <p id="result">
+                        0.834 -> Throwing something in the air and catching it
+                        <br>
+                        0.092 -> Pretending to throw something
+                        <br>
+                        0.028 -> Throwing something in the air and letting it fall
+                    </p>
+                </div>
+                <script>
+                    var parent = document.getElementById("inputVideo");
+                    document.getElementById("webcam0").style.display = "none";
+                    function run(e) {
+                        var obj = e.target;
+                        document.getElementById("webcam0").style.display = "none";
+                        document.getElementById("mp40").style.display = "none";
+                        document.getElementById(obj.id+"0").style.display = "block";
+                    }
+                    document.getElementById("mp4").addEventListener('change', run);
+                    document.getElementById("webcam").addEventListener('change',run);
+                </script>
+                <script src="{{ url_for('static', filename='jquery-3.5.1.js') }}"></script>
+                <script src="{{ url_for('static', filename='request.js') }}"></script>
+                <script src="{{ url_for('static', filename='stream.js') }}"></script>
+        </div>
+    </body>
+</HTML>
