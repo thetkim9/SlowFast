@@ -441,13 +441,15 @@ class VideoVisualizer:
             top_scores, top_classes = top_scores.tolist(), top_classes.tolist()
         elif self.mode == "thres":
             top_scores, top_classes = [], []
-            print(preds)
-            print(len(preds))
+            #print(preds)
+            #print(len(preds))
             for pred in preds:
+                print(pred)
                 mask = pred >= self.thres
                 print(mask)
                 top_scores.append(pred[mask].tolist())
                 top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+                print(top_class)
                 top_classes.append(top_class)
 
         # Create labels top k predicted classes with their scores.
@@ -652,6 +654,7 @@ class VideoVisualizer:
         return frames, adjusted
 
     def _get_thres_array(self, common_class_names=None):
+        print("c", common_class_names)
         """
         Compute a thresholds array for all classes based on `self.thes` and `self.lower_thres`.
         Args:
