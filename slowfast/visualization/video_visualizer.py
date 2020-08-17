@@ -442,8 +442,10 @@ class VideoVisualizer:
         elif self.mode == "thres":
             top_scores, top_classes = [], []
             print(preds)
+            print(len(preds))
             for pred in preds:
                 mask = pred >= self.thres
+                print(mask)
                 top_scores.append(pred[mask].tolist())
                 top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
                 top_classes.append(top_class)
