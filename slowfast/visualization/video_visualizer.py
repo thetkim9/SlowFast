@@ -670,8 +670,8 @@ class VideoVisualizer:
         #print(len(thres_array))
         #print(thres_array)
         #print(common_class_ids)
-        #import numpy
-        #thres_array = numpy.append(thres_array, 0.3)
+        import numpy
+        thres_array = numpy.append(thres_array, 0.3)
         print(common_class_ids)
         #common_class_ids = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 20, 22, 24, 26, 27, 28, 29, 30, 34, 36, 37, 38, 41, 43, 45, 46, 47, 48, 49, 51, 52, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 73, 74, 76, 77, 78, 79, 80]
         #for i in range(len(common_class_ids)):
