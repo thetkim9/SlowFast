@@ -126,12 +126,15 @@ if __name__ == '__main__':
     cfg = load_config(args)
     # cfg.DEMO.WEBCAM = 0
     cfg.DEMO.WEBCAM = -1
-    cfg.DEMO.INPUT_VIDEO = None
+    cfg.DEMO.INPUT_VIDEO = "demo_test/demo_in.mp4"
     cfg.NUM_GPUS = 1
     cfg.TRAIN.ENABLE = False
     cfg.TEST.ENABLE = False
-    cfg.DEMO.OUTPUT_FILE = None
+    cfg.DEMO.OUTPUT_FILE = "demo_test/demo_out.mp4"
     cfg.DEMO.ENABLE = True
     initialize(cfg)
+    print("start")
+    start = time.time()
     demo(cfg)
+    print(time.time()-start)
     #socketio.run(app, host='0.0.0.0')
