@@ -17,17 +17,12 @@ from slowfast.visualization.video_visualizer import VideoVisualizer
 
 logger = logging.get_logger(__name__)
 
+model = None
+frame_provider = None
 
-def run_demo(cfg, frame_provider):
-    """
-    Run demo visualization.
-    Args:
-        cfg (CfgNode): configs. Details can be found in
-            slowfast/config/defaults.py
-        frame_provider (iterator): Python iterator that return task objects that are filled
-            with necessary information such as `frames`, `id` and `num_buffer_frames` for the
-            prediction and visualization pipeline.
-    """
+def initialize(cfg):
+    global model
+    global frame_provider
     # Set random seed from configs.
     np.random.seed(cfg.RNG_SEED)
     torch.manual_seed(cfg.RNG_SEED)
@@ -63,8 +58,28 @@ def run_demo(cfg, frame_provider):
     seq_len = cfg.DATA.NUM_FRAMES * cfg.DATA.SAMPLING_RATE
 
     assert (
-        cfg.DEMO.BUFFER_SIZE <= seq_len // 2
+            cfg.DEMO.BUFFER_SIZE <= seq_len // 2
     ), "Buffer size cannot be greater than half of sequence length."
+
+    if cfg.DETECTION.ENABLE and cfg.DEMO.PREDS_BOXES != "":
+        precomputed_box_vis = AVAVisualizerWithPrecomputedBox(cfg)
+        precomputed_box_vis()
+    else:
+        if cfg.DEMO.THREAD_ENABLE:
+            frame_provider = ThreadVideoManager(cfg)
+        else:
+            frame_provider = VideoManager(cfg)
+
+def run_demo():
+    """
+    Run demo visualization.
+    Args:
+        cfg (CfgNode): configs. Details can be found in
+            slowfast/config/defaults.py
+        frame_provider (iterator): Python iterator that return task objects that are filled
+            with necessary information such as `frames`, `id` and `num_buffer_frames` for the
+            prediction and visualization pipeline.
+    """
     num_task = 0
     # Start reading frames.
     frame_provider.start()
@@ -100,20 +115,9 @@ def demo(cfg):
         cfg (CfgNode): configs. Details can be found in
             slowfast/config/defaults.py
     """
-    # AVA format-specific visualization with precomputed boxes.
-    if cfg.DETECTION.ENABLE and cfg.DEMO.PREDS_BOXES != "":
-        precomputed_box_vis = AVAVisualizerWithPrecomputedBox(cfg)
-        precomputed_box_vis()
-    else:
-        start = time.time()
-        if cfg.DEMO.THREAD_ENABLE:
-            frame_provider = ThreadVideoManager(cfg)
-        else:
-            frame_provider = VideoManager(cfg)
+    for task in run_demo(cfg, frame_provider):
+        for frame in frame_provider.display(task):
+            print("yield")
+            yield frame
 
-        for task in tqdm.tqdm(run_demo(cfg, frame_provider)):
-            frame_provider.display(task)
-
-        frame_provider.join()
-        frame_provider.clean()
-        logger.info("Finish demo in: {}".format(time.time() - start))
+        #logger.info("Finish demo in: {}".format(time.time() - start))

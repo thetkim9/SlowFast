@@ -89,6 +89,7 @@ class VideoManager:
         while was_read and len(frames) < self.seq_length:
             was_read, frame = self.cap.read()
             frames.append(frame)
+            #frames.append(frame)
         if was_read and self.buffer_size != 0:
             self.buffer = frames[-self.buffer_size :]
 
@@ -121,10 +122,7 @@ class VideoManager:
                 the necessary information for prediction visualization. (e.g. visualized frames.)
         """
         for frame in task.frames[task.num_buffer_frames :]:
-            if self.output_file is None:
-                cv2.imshow("SlowFast", frame)
-            else:
-                self.output_file.write(frame)
+            yield frame
 
     def clean(self):
         """

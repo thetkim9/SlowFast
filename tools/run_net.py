@@ -19,11 +19,11 @@ def main():
     cfg = load_config(args)
     #cfg.DEMO.WEBCAM = 0
     cfg.DEMO.WEBCAM = -1
-    cfg.DEMO.INPUT_VIDEO = "demo_test/demo_in2.mp4"
+    cfg.DEMO.INPUT_VIDEO = None
     cfg.NUM_GPUS = 1
     cfg.TRAIN.ENABLE = False
     cfg.TEST.ENABLE = False
-    cfg.DEMO.OUTPUT_FILE = "demo_test/demo_out2.mp4"
+    cfg.DEMO.OUTPUT_FILE = None
     cfg.DEMO.ENABLE = True
     # Perform training.
     if cfg.TRAIN.ENABLE:

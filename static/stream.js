@@ -1,73 +1,110 @@
-if (document.getElementById("webcam0")!=null) {
-    let preview = document.getElementById("preview");
-    let recording = document.getElementById("preload");
-    let startButton = document.getElementById("startButton");
-    let stopButton = document.getElementById("stopButton");
-    let logElement = document.getElementById("log");
+var startButton = document.getElementById("startButton");
+var stopButton = document.getElementById("stopButton");
 
+var socket;
 
-    function log(msg) {
-        //logElement.innerHTML += msg + "\n";
+const video = document.querySelector("#videoElement");
+
+video.width = 125;
+video.height = 93;
+
+var canvas = document.getElementById("canvasOutput");
+var context = canvas.getContext("2d");
+
+canvas.width = 125;
+canvas.height = 93;
+
+canvas.style.display = 'none';
+video.style.display = 'none';
+
+var image = document.getElementById("image");
+
+image.width = 250;
+image.height = 186;
+
+var drawer;
+
+let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+let cap = new cv.VideoCapture(video);
+
+const FPS = 5;
+
+var emitter;
+
+var occupant = false;
+
+function videoLoop() {
+    context.drawImage(video, 0, 0, video.width, video.height);
+}
+
+startButton.onclick = () => {
+    startButton.disabled = true;
+    $.get('occupy', function(occupied) {
+        occupant = occupied;
+        if (occupied) {
+            socket = io('/');
+            console.log('intermediary stage');
+            socket.on('connect', function(){
+                console.log("Connected...!", socket.connected);
+            });
+            socket.on('response_back', function(data){
+                const arrayBufferView = new Uint8Array(data);
+                const blob = new Blob([arrayBufferView], {type: 'image/jpeg'});
+                const imageUrl = URL.createObjectURL(blob);
+                document.getElementById('image').src = imageUrl;
+            });
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.addEventListener('loadeddata', function() {
+                        video.play();
+                        drawer = setInterval(videoLoop, 1000 / 30);
+                    });
+                    video.play();
+                })
+                .catch(function (err0r) {
+                    console.log(err0r)
+                    console.log("Something went wrong!");
+                });
+            }
+            emitter = setInterval(() => {
+                cap.read(src);
+                var type = "image/jpeg"
+                var url = canvas.toDataURL(type);
+                fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                    if (socket!=null) {
+                        socket.emit('image', blob);
+                    }
+                })
+            }, 1000/FPS);
+        }
+        else {
+            //add message to endpoint in the future
+            console.log("gpu currently occupied by other user's request")
+        }
+    })
+    stopButton.disabled = false;
+}
+
+stopButton.onclick = () => {
+    stopButton.disabled = true;
+    if (occupant) {
+        occupant = false;
+        $.get('unoccupy');
+        if (socket!=null) {
+            socket.on('disconnect', function(){
+                console.log("Disconnected...", socket.disconnected);
+            });
+            socket.disconnect();
+        }
+        if (drawer!=null)
+            clearInterval(drawer);
+        if (emitter!=null)
+            clearInterval(emitter);
     }
-
-    function wait(delayInMS) {
-        return new Promise(resolve => setTimeout(resolve, delayInMS));
-    }
-    var recorder;
-    var data;
-    function startRecording(stream) {
-        recorder = new MediaRecorder(stream);
-        data = [];
-
-        recorder.ondataavailable = event => data.push(event.data);
-        recorder.start();
-    }
-
-    function stop(stream) {
-        stream.getTracks().forEach(track => track.stop());
-        let stopped = new Promise((resolve, reject) => {
-        recorder.onstop = resolve;
-        recorder.onerror = event => reject(event.name);
-        });
-
-        let recorded = wait(0).then(
-        () => recorder.state == "recording" && recorder.stop()
-        );
-
-        return Promise.all([
-            stopped,
-            recorded
-        ])
-        .then(() => data);
-        return data;
-    }
-
-    startButton.addEventListener("click", function() {
-        document.getElementById('submit').disabled = true;
-        navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-        }).then(stream => {
-                preview.srcObject = stream;
-                preview.captureStream = preview.captureStream || preview.mozCaptureStream;
-                return new Promise(resolve => preview.onplaying = resolve);
-              }).then(() => startRecording(preview.captureStream()))
-              .catch(log);
-    }, false);
-
-    stopButton.addEventListener("click", function() {
-        stop(preview.srcObject)
-        .then (recordedChunks => {
-                let recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
-                recording.src = URL.createObjectURL(recordedBlob);
-                var file = new File([recordedBlob], "webcam.mp4");
-                let list = new DataTransfer();
-                list.items.add(file);
-                let myFileList = list.files;
-                document.getElementById('source').files = myFileList;
-                log("Successfully recorded " + recordedBlob.size + " bytes of " +
-                    recordedBlob.type + " media.");
-              }).catch(log);
-              document.getElementById('submit').disabled = false;
-    }, false);
+    startButton.disabled = false;
 }

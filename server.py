@@ -5,11 +5,17 @@ import sys
 import threading
 import argparse
 from test_video import Model
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
+import cv2
+import imutils
+import base64
+from PIL import Image
+import io
+import numpy
 
-progressRates = {}
 threads = []
-results = {}
-
 
 class thread_with_trace(threading.Thread):
     def __init__(self, *args, **keywords):
@@ -61,7 +67,7 @@ def tpn(user_id):
     return
 
   global threads
-  if len(threads)>3:
+  if len(threads)>0:
       return {'error': 'too many requests'}, 429
 
   print(request.files)
