@@ -121,6 +121,7 @@ def health():
 
 
 if __name__ == '__main__':
+    print("main app.py")
     args = parse_args()
     cfg = load_config(args)
     # cfg.DEMO.WEBCAM = 0
