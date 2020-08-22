@@ -109,6 +109,7 @@ def run_demo():
 
 
 def demo(cfg):
+    print("demo start!")
     """
     Run inference on an input video or stream from webcam.
     Args:
