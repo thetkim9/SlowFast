@@ -21,6 +21,7 @@ model = None
 frame_provider = None
 
 def initialize(cfg):
+    print("initialize start")
     global model
     global frame_provider
     # Set random seed from configs.
