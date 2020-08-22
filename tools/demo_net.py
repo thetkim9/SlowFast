@@ -116,7 +116,7 @@ def demo(cfg):
         cfg (CfgNode): configs. Details can be found in
             slowfast/config/defaults.py
     """
-    for task in run_demo(cfg, frame_provider):
+    for task in run_demo():
         for frame in frame_provider.display(task):
             print("yield")
             yield frame
