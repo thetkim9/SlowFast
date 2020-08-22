@@ -46,5 +46,6 @@ RUN pip install gunicorn
 COPY . .
 RUN export PYTHONPATH=./slowfast:$PYTHONPATH
 EXPOSE 5000
-CMD gunicorn --bind 0.0.0.0:5000 --worker-class eventlet -w 1 wsgi:app
+CMD python app.py
+#CMD gunicorn --bind 0.0.0.0:5000 --worker-class eventlet -w 1 wsgi:app
 #CMD python tools/run_net.py --cfg demo/AVA/SLOWFAST_32x2_R101_50_50.yaml
