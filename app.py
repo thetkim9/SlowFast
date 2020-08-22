@@ -135,6 +135,9 @@ if __name__ == '__main__':
     initialize(cfg)
     print("start")
     start = time.time()
-    demo(cfg)
+    count = 0
+    for frame in demo(cfg):
+        count += 1
+    print(count)
     print(time.time()-start)
     #socketio.run(app, host='0.0.0.0')
