@@ -449,8 +449,8 @@ class VideoVisualizer:
                 #print(mask)
                 top_scores.append(pred[mask].tolist())
                 top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
-                for i in range(len(top_class)):
-                    top_class[i] += 1
+                #for i in range(len(top_class)):
+                    #top_class[i] += 1
                 print(top_class)
                 top_classes.append(top_class)
 
@@ -686,7 +686,7 @@ class VideoVisualizer:
         #common_class_ids = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 20, 22, 24, 26, 27, 28, 29, 30, 34, 36, 37, 38, 41, 43, 45, 46, 47, 48, 49, 51, 52, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 73, 74, 76, 77, 78, 79, 80]
         #for i in range(len(common_class_ids)):
             #common_class_ids[i] -= 1
-        common_class_ids.pop()
+        #common_class_ids.pop()
         thres_array[common_class_ids] = self.thres
         print(self.thres)
         self.thres = torch.from_numpy(thres_array)

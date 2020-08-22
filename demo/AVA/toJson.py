@@ -10,7 +10,11 @@ with open('ava.pbtxt', "r") as infile:
             index3 = item.find(" }")
             key = item[index+6:index2-1]
             val = item[index2+4:index3]
-            print(val, end=", ")
-            outfile.write(key+":"+val+",")
+            if val!="":
+                print(val, end=", ")
+                if int(val)!=80:
+                    outfile.write(key+":"+str(int(val)-1)+",")
+                else:
+                    outfile.write(key + ":" + str(int(val) - 1))
         print("]")
         outfile.write("}")
