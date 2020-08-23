@@ -97,6 +97,7 @@ startButton.onclick = () => {
                 $.get('updateFrame', function(data) {
                     try {
                         if (data!="None") {
+                            console.log("?");
                             const arrayBufferView = new Uint8Array(data);
                             const blob = new Blob([arrayBufferView], {type: 'image/jpeg'});
                             const imageUrl = URL.createObjectURL(blob);
@@ -109,7 +110,7 @@ startButton.onclick = () => {
             outputTManager = setInterval(() => {
                 $.get('setPredictions', function(dict) {
                     try {
-                        data = dict['predictions']
+                        data = dict['predictions'];
                         if (data!="None") {
                             text = document.getElementById('predictions').innerHTML;
                             text = ""
@@ -147,6 +148,8 @@ stopButton.onclick = () => {
             clearInterval(emitter);
         if (outputFManager!=null)
             clearInterval(outputFManager);
+        if (outputTManager!=null)
+            clearInterval(outputTManager);
     }
     startButton.disabled = false;
 }

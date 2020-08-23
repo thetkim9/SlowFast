@@ -124,7 +124,6 @@ def unoccupy():
 def updateFrame():
     #pull frame that has been processed
     if len(frames_out) != 0:
-        print("frames_out")
         frame = frames_out.pop(0)
         buff = cv2.imencode('.jpeg', frame)[1]
         response = io.BytesIO(buff).getvalue()
@@ -134,7 +133,9 @@ def updateFrame():
 
 @app.route('/setPredictions')
 def setPredictions():
-    return {'predictions': get_predictions()}
+    results = get_predictions()
+    print(results)
+    return {'predictions': results}
 
 
 @socketio.on('image')

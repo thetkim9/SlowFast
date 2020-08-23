@@ -127,6 +127,7 @@ def get_predictions():
             return predictions
 
 def demo(cfg):
+    global predictions
     """
     Run inference on an input video or stream from webcam.
     Args:
@@ -135,14 +136,14 @@ def demo(cfg):
     """
     for task in run_demo():
         top_scores = []
-        predictions = []
+        top_classes = []
+        for pred in task.action_preds:
+            mask = pred >= 0.3
+            top_scores.append(pred[mask].tolist())
+            top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+            top_classes.append(top_class)
         with lockPost:
-            for pred in task.action_preds:
-                mask = pred >= 0.3
-                top_scores.append(pred[mask].tolist())
-                top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
-                predictions.append(top_class)
-            print(predictions)
+            predictions = top_classes
         for frame in frame_provider.display(task):
             yield frame
 
