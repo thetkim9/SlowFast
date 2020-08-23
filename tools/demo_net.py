@@ -109,6 +109,7 @@ def run_demo():
             continue
 
 def put_frame(frame):
+    print("frame in")
     frame_provider.frames_in.append(frame)
 
 def demo(cfg):

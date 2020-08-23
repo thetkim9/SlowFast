@@ -25,7 +25,8 @@ occupied = False
 frames_in = []
 frames_out = []
 
-thread = None
+threadM = None
+threadF = None
 
 class thread_with_trace(threading.Thread):
     def __init__(self, *args, **keywords):
@@ -83,9 +84,12 @@ def index():
 
 @app.route('/occupy')
 def occupy():
-    global thread
-    thread = thread_with_trace(target=ml_processing)
-    thread.start()
+    global threadM
+    threadM = thread_with_trace(target=ml_processing)
+    threadM.start()
+    global threadF
+    threadF = thread_with_trace(target=provide_frame)
+    threadF.start()
     global occupied
     if not occupied:
         occupied = True
@@ -95,8 +99,10 @@ def occupy():
 
 @app.route('/unoccupy')
 def unoccupy():
-    if thread is not None and thread.is_alive():
-        thread.kill()
+    if threadM is not None and threadM.is_alive():
+        threadM.kill()
+    if threadF is not None and threadF.is_alive():
+        threadF.kill()
     global frames_in
     global frames_out
     frames_in = []
