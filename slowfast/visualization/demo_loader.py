@@ -108,7 +108,7 @@ class VideoManager:
 
         return was_read, task
 
-    def get_output_file(self, path, fps=30):
+    def get_output_file(self, path, fps=8):
         """
         Return a video writer object.
         Args:
