@@ -99,7 +99,6 @@ startButton.onclick = () => {
                 $.get('updateFrame', function(data) {
                     try {
                         if (data!="None") {
-                            print(data)
                             document.getElementById('image2').src = 'data:image/jpeg;base64,'+data;
                         }
                     }
