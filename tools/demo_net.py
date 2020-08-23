@@ -108,6 +108,8 @@ def run_demo():
         except IndexError:
             continue
 
+def put_frame(frame):
+    frame_provider.frames_in.append(frame)
 
 def demo(cfg):
     """

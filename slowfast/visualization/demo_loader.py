@@ -13,8 +13,6 @@ from slowfast.visualization.utils import TaskInfo
 
 logger = logging.get_logger(__name__)
 
-from app import frames_in
-
 
 class VideoManager:
     """
@@ -65,6 +63,7 @@ class VideoManager:
         self.seq_length = cfg.DATA.NUM_FRAMES * cfg.DATA.SAMPLING_RATE
         self.test_crop_size = cfg.DATA.TEST_CROP_SIZE
         self.clip_vis_size = cfg.DEMO.CLIP_VIS_SIZE
+        self.frames_in = []
 
     def __iter__(self):
         return self
@@ -89,12 +88,12 @@ class VideoManager:
             frames = self.buffer
         while len(frames) < self.seq_length:
             try:
-                print(frames_in)
-                frame = frames_in.pop(0)
+                frame = self.frames_in.pop(0)
                 frames.append(frame)
             except:
                 pass
             #frames.append(frame)
+            time.sleep(0.01)
         print(len(frames))
         was_read = True
         if was_read and self.buffer_size != 0:

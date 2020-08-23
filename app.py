@@ -57,6 +57,16 @@ class thread_with_trace(threading.Thread):
     def kill(self):
         self.killed = True
 
+#function running in another thread that puts frames to the frame provider in demo_net.py
+def provide_frame():
+    try:
+        frame = frames_in.pop(0)
+        put_frame(frame)
+    except:
+        pass
+    time.sleep(0.01)
+
+
 # Do ml-processing with the frame inside of a thread running in the background (frames_in, frames_out)
 def ml_processing():
     print("start")
