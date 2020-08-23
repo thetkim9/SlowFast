@@ -13,6 +13,8 @@ from slowfast.visualization.utils import TaskInfo
 
 logger = logging.get_logger(__name__)
 
+from app import frames_in
+
 
 class VideoManager:
     """
@@ -85,9 +87,8 @@ class VideoManager:
         frames = []
         if len(self.buffer) != 0:
             frames = self.buffer
-        was_read = True
-        while was_read and len(frames) < self.seq_length:
-            was_read, frame = self.cap.read()
+        while len(frames) < self.seq_length:
+            frame = frames_in.pop(0)
             frames.append(frame)
             #frames.append(frame)
         if was_read and self.buffer_size != 0:

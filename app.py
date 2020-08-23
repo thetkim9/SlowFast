@@ -59,7 +59,13 @@ class thread_with_trace(threading.Thread):
 
 # Do ml-processing with the frame inside of a thread running in the background (frames_in, frames_out)
 def ml_processing():
-    pass
+    print("start")
+    start = time.time()
+    count = 0
+    for frame in demo(cfg):
+        count += 1
+    print(count)
+    print(time.time() - start)
 
 @app.route('/')
 def index():
@@ -103,10 +109,12 @@ def image(data_image):
     #put frame that should be processed
     frames_in.append(frame)
 
+    '''
     #pull frame that has been processed
     while len(frames_out) == 0:
         time.sleep(0.01)
     frame = frames_out.pop(0)
+    '''
 
     #encoding for emission
     buff = cv2.imencode('.jpeg', frame)[1]
@@ -133,11 +141,4 @@ if __name__ == '__main__':
     cfg.DEMO.OUTPUT_FILE = "demo_test/demo_out2.mp4"
     cfg.DEMO.ENABLE = True
     initialize(cfg)
-    print("start")
-    start = time.time()
-    count = 0
-    for frame in demo(cfg):
-        count += 1
-    print(count)
-    print(time.time()-start)
-    #socketio.run(app, host='0.0.0.0')
+    socketio.run(app, host='0.0.0.0')
