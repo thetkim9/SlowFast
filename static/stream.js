@@ -22,6 +22,11 @@ var image = document.getElementById("image");
 image.width = 250;
 image.height = 186;
 
+var image2 = document.getElementById("image2");
+
+image2.width = 250;
+image2.height = 186;
+
 var drawer;
 
 let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
@@ -69,7 +74,7 @@ startButton.onclick = () => {
                     });
                     video.play();
                 })
-                .catch(function (err0r) {
+                .catch(function (error) {
                     console.log(err0r)
                     console.log("Something went wrong!");
                 });
