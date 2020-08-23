@@ -28,9 +28,11 @@ let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
 let cap = new cv.VideoCapture(video);
 
-const FPS = 10;
+const FPS = 8;
 
 var emitter;
+
+var outputManager;
 
 var occupant = false;
 
@@ -84,6 +86,20 @@ startButton.onclick = () => {
                     }
                 })
             }, 1000/FPS);
+            outputManager = setInterval(() => {
+                $.get('updateFrame', function(dict) {
+                    try {
+                        data = dict['frame'];
+                        if (data!="None") {
+                            const arrayBufferView = new Uint8Array(data);
+                            const blob = new Blob([arrayBufferView], {type: 'image/jpeg'});
+                            const imageUrl = URL.createObjectURL(blob);
+                            document.getElementById('image2').src = imageUrl;
+                        }
+                    }
+                    catch (err) {}
+                }
+            }, 1000/FPS);
         }
         else {
             //add message to endpoint in the future
@@ -108,6 +124,8 @@ stopButton.onclick = () => {
             clearInterval(drawer);
         if (emitter!=null)
             clearInterval(emitter);
+        if (outputManger!=null)
+            clearInterval(outputManger);
     }
     startButton.disabled = false;
 }

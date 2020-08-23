@@ -97,7 +97,6 @@ class VideoManager:
                 frames.append(frame)
             except:
                 pass
-            #frames.append(frame)
             time.sleep(0.01)
         print(len(frames))
         was_read = True

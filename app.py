@@ -31,6 +31,9 @@ threadF = None
 lockPro = threading.Lock()
 lockPut = threading.Lock()
 
+lockML = threading.Lock()
+lockUF = threading.Lock()
+
 class thread_with_trace(threading.Thread):
     def __init__(self, *args, **keywords):
         threading.Thread.__init__(self, *args, **keywords)
@@ -73,13 +76,14 @@ def provide_frame():
         time.sleep(0.01)
 
 
-# Do ml-processing with the frame inside of a thread running in the background (frames_in, frames_out)
+# Do ml-processing with the frame inside of a thread running in the background
 def ml_processing():
     print("start")
     start = time.time()
     count = 0
-    for frame in demo(cfg):
-        count += 1
+    with lockML:
+        for frame in demo(cfg):
+            frames_out.append(frame)
     print(count)
     print(time.time() - start)
 
@@ -116,6 +120,16 @@ def unoccupy():
     occupied = False
     return "False"
 
+@app.route('/updateFrame')
+def updateFrame():
+    #pull frame that has been processed
+    if len(frames_out) != 0:
+        frame = frames_out.pop(0)
+    else:
+        frame = "None"
+    return {'frame': frame}
+
+
 @socketio.on('image')
 def image(data_image):
     # decode and convert into image
@@ -130,13 +144,6 @@ def image(data_image):
     #put frame that should be processed
     with lockPut:
         frames_in.append(frame)
-
-    '''
-    #pull frame that has been processed
-    while len(frames_out) == 0:
-        time.sleep(0.01)
-    frame = frames_out.pop(0)
-    '''
 
     #encoding for emission
     buff = cv2.imencode('.jpeg', frame)[1]
