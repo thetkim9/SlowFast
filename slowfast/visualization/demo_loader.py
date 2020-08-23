@@ -132,6 +132,7 @@ class VideoManager:
                 the necessary information for prediction visualization. (e.g. visualized frames.)
         """
         for frame in task.frames[task.num_buffer_frames :]:
+            self.output_file.write(frame)
             yield frame
 
     def clean(self):
