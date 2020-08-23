@@ -94,6 +94,10 @@ def index():
 
 @app.route('/occupy')
 def occupy():
+    global frames_in
+    global frames_out
+    frames_in = []
+    frames_out = []
     global threadM
     threadM = thread_with_trace(target=ml_processing)
     threadM.start()
@@ -113,10 +117,6 @@ def unoccupy():
         threadM.kill()
     if threadF is not None and threadF.is_alive():
         threadF.kill()
-    global frames_in
-    global frames_out
-    frames_in = []
-    frames_out = []
     global occupied
     occupied = False
     return "False"
