@@ -16,6 +16,12 @@
             #outputF {
                 display: inline-block;
             }
+            #link {
+                display: inline-block;
+            }
+            #logo {
+                display: inline-block;
+            }
         </style>
     </head>
     <body>
@@ -23,13 +29,18 @@
             <div class="jumbotron mt-3">
 
                 <h1>SlowFast</h1>
-                <A>Git Hub Repo : </A> <A href="https://github.com/thetkim9/SlowFast/tree/webserver"> Github</A>
-                <A>Ainize 2.0 : </A> <A href="https://ainize.ai/thetkim9/LiveVideoStream?branch=master"> Ainize</A>
-                <br>
+                <hr>
+                <div id="link">
+                    <A>Git Hub Repo : </A> <A href="https://github.com/thetkim9/SlowFast/tree/webserver"> Github</A>
+                    <A>Ainize 2.0 : </A> <A href="https://webserver-slow-fast-thetkim9.endpoint.ainize.ai"> Ainize</A>
+                </div>
+                <div id="logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}">
+                </div>
+                <hr>
                 <p>Fully supported on chrome only.</p>
                 <p>Make sure that the webcam is turned on and that your browser has allowed access to the camera.</p>
                 <hr class="solid">
-                <br>
                 <div id = 'inputVideo' >
                     <div id="container">
                         <canvas id="canvasOutput"></canvas>
