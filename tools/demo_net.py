@@ -13,12 +13,14 @@ from slowfast.visualization.ava_demo_precomputed_boxes import (
 from slowfast.visualization.demo_loader import ThreadVideoManager, VideoManager
 from slowfast.visualization.predictor import ActionPredictor
 from slowfast.visualization.video_visualizer import VideoVisualizer
+from slowfast.utils.misc import get_class_names
 
 logger = logging.get_logger(__name__)
 
 model = None
 frame_provider = None
 predictions = []
+class_names = []
 
 def initialize(cfg):
     print("initialize start")
@@ -70,6 +72,8 @@ def initialize(cfg):
             frame_provider = ThreadVideoManager(cfg)
         else:
             frame_provider = VideoManager(cfg)
+    global class_names
+    class_names, _, _ = get_class_names(cfg.DEMO.LABEL_FILE_PATH, None, None)
 
 def run_demo():
     """
@@ -124,7 +128,7 @@ def get_predictions():
         if len(predictions)==0:
             return "None"
         else:
-            return predictions[0]
+            return predictions
 
 def demo(cfg):
     global predictions
@@ -140,8 +144,8 @@ def demo(cfg):
         for pred in task.action_preds:
             mask = pred >= 0.3
             top_scores.append(pred[mask].tolist())
-            top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
-            top_classes.append(top_class)
+            top_class_index = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+            top_classes.append(class_names[top_class_index])
         with lockPost:
             predictions = top_classes
         for frame in frame_provider.display(task):
