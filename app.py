@@ -28,6 +28,8 @@ frames_out = []
 threadM = None
 threadF = None
 
+lock = threading.Lock()
+
 class thread_with_trace(threading.Thread):
     def __init__(self, *args, **keywords):
         threading.Thread.__init__(self, *args, **keywords)
@@ -62,7 +64,8 @@ class thread_with_trace(threading.Thread):
 def provide_frame():
     try:
         print("frame pop")
-        frame = frames_in.pop(0)
+        with lock:
+            frame = frames_in.pop(0)
         print("frame in")
         put_frame(frame)
     except:
@@ -125,7 +128,8 @@ def image(data_image):
     frame = cv2.flip(frame, 1)
 
     #put frame that should be processed
-    frames_in.append(frame)
+    with lock:
+        frames_in.append(frame)
 
     '''
     #pull frame that has been processed
