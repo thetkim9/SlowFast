@@ -94,7 +94,6 @@ startButton.onclick = () => {
             outputManager = setInterval(() => {
                 $.get('updateFrame', function(dict) {
                     try {
-                        data = dict['frame'];
                         if (data!="None") {
                             const arrayBufferView = new Uint8Array(data);
                             const blob = new Blob([arrayBufferView], {type: 'image/jpeg'});

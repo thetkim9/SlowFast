@@ -126,7 +126,6 @@ def demo(cfg):
     """
     for task in run_demo():
         for frame in frame_provider.display(task):
-            print("yield")
             yield frame
 
         #logger.info("Finish demo in: {}".format(time.time() - start))
