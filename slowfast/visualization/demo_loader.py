@@ -88,9 +88,14 @@ class VideoManager:
         if len(self.buffer) != 0:
             frames = self.buffer
         while len(frames) < self.seq_length:
-            frame = frames_in.pop(0)
+            try:
+                frame = frames_in.pop(0)
+            except:
+                pass
             frames.append(frame)
             #frames.append(frame)
+            
+        was_read = True
         if was_read and self.buffer_size != 0:
             self.buffer = frames[-self.buffer_size :]
 
