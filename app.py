@@ -78,9 +78,9 @@ def occupy():
     thread.start()
     global occupied
     if not occupied:
-        occupied = True
-        return True
-    return False
+        occupied = (True)
+        return (True)
+    return (False)
 
 
 @app.route('/unoccupy')
@@ -92,8 +92,8 @@ def unoccupy():
     frames_in = []
     frames_out = []
     global occupied
-    occupied = False
-    return False
+    occupied = (False)
+    return (False)
 
 @socketio.on('image')
 def image(data_image):

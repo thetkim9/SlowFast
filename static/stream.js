@@ -41,8 +41,8 @@ function videoLoop() {
 startButton.onclick = () => {
     startButton.disabled = true;
     $.get('occupy', function(occupied) {
-        occupant = occupied;
-        if (occupied) {
+        occupant = occupied[0];
+        if (occupant) {
             socket = io('/');
             console.log('intermediary stage');
             socket.on('connect', function(){
