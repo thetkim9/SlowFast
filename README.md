@@ -1,5 +1,13 @@
 # PySlowFast
 
+## Run demo
+
+Try running the service straight away!!
+
+Click the button below to go to the hosting site. Then, click the blue link, which is the endpoint.
+
+[![Run on Ainize](https://ainize.ai/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=https://github.com/thetkim9/SlowFast)
+
 PySlowFast is an open source video understanding codebase from FAIR that provides state-of-the-art video classification models with efficient training. This repository includes implementations of the following methods:
 
 - [SlowFast Networks for Video Recognition](https://arxiv.org/abs/1812.03982)
