@@ -91,8 +91,8 @@ class VideoManager:
             try:
                 #print(self.frames_in)
                 with self.lock:
-                    was_read, frame = self.cap.read()
-                    #frame = self.frames_in.pop(0)
+                    #was_read, frame = self.cap.read()
+                    frame = self.frames_in.pop(0)
                     pass
                 frames.append(frame)
             except:
