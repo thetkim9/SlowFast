@@ -509,7 +509,7 @@ class VideoVisualizer:
                 box_facecolors=colors,
                 alpha=text_alpha,
             )
-
+        print(text_labels)
         return frame_visualizer.output.get_image()
 
     def draw_clip_range(
