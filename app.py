@@ -61,7 +61,9 @@ class thread_with_trace(threading.Thread):
 #function running in another thread that puts frames to the frame provider in demo_net.py
 def provide_frame():
     try:
+        print("frame pop")
         frame = frames_in.pop(0)
+        print("frame in")
         put_frame(frame)
     except:
         pass
