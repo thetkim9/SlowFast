@@ -212,6 +212,7 @@ class ThreadVideoManager:
         self.input_lock = threading.Lock()
         self.output_lock = threading.Lock()
         self.stopped = False
+        self.lock = threading.Lock()
         atexit.register(self.clean)
 
     def get_output_file(self, path, fps=30):
@@ -248,10 +249,18 @@ class ThreadVideoManager:
             if len(self.buffer) != 0:
                 frames = self.buffer
             self.input_lock.acquire()
-            while was_read and len(frames) < self.seq_length:
-                was_read, frame = self.cap.read()
-                if was_read:
+            while len(frames) < self.seq_length:
+                try:
+                    # print(self.frames_in)
+                    with self.lock:
+                        # was_read, frame = self.cap.read()
+                        frame = self.frames_in.pop(0)
+                        pass
                     frames.append(frame)
+                except:
+                    pass
+                time.sleep(0.01)
+            print(len(frames))
             self.input_lock.release()
             if was_read:
                 self.buffer = frames[-self.buffer_size :]
