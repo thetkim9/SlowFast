@@ -89,8 +89,10 @@ class VideoManager:
             frames = self.buffer
         while len(frames) < self.seq_length:
             try:
+                print("frame in")
                 frame = frames_in.pop(0)
                 frames.append(frame)
+                print(len(frames))
             except:
                 pass
             #frames.append(frame)
