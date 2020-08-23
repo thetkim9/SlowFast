@@ -116,9 +116,9 @@ startButton.onclick = () => {
                             for (var i = 0; i < data.length; i++) {
                               text += data[i] + ", ";
                             }
-                            text += "<br>";
+                            text += "\r\n";
                             console.log(text)
-                            document.getElementById('predictions').innerHTML += text;
+                            document.getElementById('predictions').value += text;
                         }
                     }
                     catch (err) {}
