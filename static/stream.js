@@ -128,8 +128,8 @@ stopButton.onclick = () => {
             clearInterval(drawer);
         if (emitter!=null)
             clearInterval(emitter);
-        if (outputManger!=null)
-            clearInterval(outputManger);
+        if (outputManager!=null)
+            clearInterval(outputManager);
     }
     startButton.disabled = false;
 }
