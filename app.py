@@ -28,7 +28,8 @@ frames_out = []
 threadM = None
 threadF = None
 
-lock = threading.Lock()
+lockPro = threading.Lock()
+lockPut = threading.Lock()
 
 class thread_with_trace(threading.Thread):
     def __init__(self, *args, **keywords):
@@ -62,15 +63,16 @@ class thread_with_trace(threading.Thread):
 
 #function running in another thread that puts frames to the frame provider in demo_net.py
 def provide_frame():
-    try:
-        print("frame pop")
-        with lock:
-            frame = frames_in.pop(0)
-        print("frame in")
-        put_frame(frame)
-    except:
-        pass
-    time.sleep(0.01)
+    while True:
+        try:
+            print("frame pop")
+            with lockPro:
+                frame = frames_in.pop(0)
+            print("frame in")
+            put_frame(frame)
+        except:
+            pass
+        time.sleep(0.01)
 
 
 # Do ml-processing with the frame inside of a thread running in the background (frames_in, frames_out)
@@ -128,7 +130,7 @@ def image(data_image):
     frame = cv2.flip(frame, 1)
 
     #put frame that should be processed
-    with lock:
+    with lockPut:
         frames_in.append(frame)
 
     '''

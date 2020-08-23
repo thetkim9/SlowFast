@@ -108,9 +108,13 @@ def run_demo():
         except IndexError:
             continue
 
+import threading
+lock = threading.Lock()
+
 def put_frame(frame):
     print("frame in")
-    frame_provider.frames_in.append(frame)
+    with lock:
+        frame_provider.frames_in.append(frame)
 
 def demo(cfg):
     """

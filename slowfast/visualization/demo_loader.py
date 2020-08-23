@@ -64,6 +64,7 @@ class VideoManager:
         self.test_crop_size = cfg.DATA.TEST_CROP_SIZE
         self.clip_vis_size = cfg.DEMO.CLIP_VIS_SIZE
         self.frames_in = []
+        self.lock = threading.Lock()
 
     def __iter__(self):
         return self
@@ -89,7 +90,8 @@ class VideoManager:
         while len(frames) < self.seq_length:
             try:
                 print(self.frames_in)
-                frame = self.frames_in.pop(0)
+                with self.lock:
+                    frame = self.frames_in.pop(0)
                 frames.append(frame)
             except:
                 pass
