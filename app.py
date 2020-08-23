@@ -125,9 +125,11 @@ def updateFrame():
     #pull frame that has been processed
     if len(frames_out) != 0:
         frame = frames_out.pop(0)
+        buff = cv2.imencode('.jpeg', frame)[1]
+        response = io.BytesIO(buff).getvalue()
+        return {'frame': response}
     else:
-        frame = "None"
-    return {'frame': frame}
+        return {'frame': "None"}
 
 
 @socketio.on('image')
