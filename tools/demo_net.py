@@ -109,7 +109,7 @@ def run_demo():
             continue
 
 
-def demo(cfg):
+def demo(cfg, frames):
     """
     Run inference on an input video or stream from webcam.
     Args:
