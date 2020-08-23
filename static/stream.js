@@ -37,7 +37,9 @@ const FPS = 8;
 
 var emitter;
 
-var outputManager;
+var outputFManager;
+
+var outputTManager;
 
 var occupant = false;
 
@@ -91,8 +93,8 @@ startButton.onclick = () => {
                     }
                 })
             }, 1000/FPS);
-            outputManager = setInterval(() => {
-                $.get('updateFrame', function(dict) {
+            outputFManager = setInterval(() => {
+                $.get('updateFrame', function(data) {
                     try {
                         if (data!="None") {
                             const arrayBufferView = new Uint8Array(data);
@@ -104,6 +106,21 @@ startButton.onclick = () => {
                     catch (err) {}
                 })
             }, 1000/FPS);
+            outputTManager = setInterval(() => {
+                $.get('setPredictions', function(dict) {
+                    try {
+                        data = dict['predictions']
+                        if (data!="None") {
+                            text = document.getElementById('predictions').innerHTML;
+                            text = ""
+                            for (var i = 0; i < data.length; i++) {
+                              text += data[i] + "<br>";
+                            }
+                        }
+                    }
+                    catch (err) {}
+                })
+            }, 500);
         }
         else {
             //add message to endpoint in the future
@@ -128,8 +145,8 @@ stopButton.onclick = () => {
             clearInterval(drawer);
         if (emitter!=null)
             clearInterval(emitter);
-        if (outputManager!=null)
-            clearInterval(outputManager);
+        if (outputFManager!=null)
+            clearInterval(outputFManager);
     }
     startButton.disabled = false;
 }

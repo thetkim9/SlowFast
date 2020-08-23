@@ -132,6 +132,10 @@ def updateFrame():
     else:
         return "None"
 
+@app.route('/setPredictions')
+def setPredictions():
+    return {'predictions': get_predictions()}
+
 
 @socketio.on('image')
 def image(data_image):

@@ -18,7 +18,7 @@ logger = logging.get_logger(__name__)
 
 model = None
 frame_provider = None
-predictions = None
+predictions = []
 
 def initialize(cfg):
     print("initialize start")
@@ -119,9 +119,12 @@ def put_frame(frame):
     with lockF:
         frame_provider.frames_in.append(frame)
 
-def get_prediction():
+def get_predictions():
     with lockGet:
-        return predictions
+        if len(predictions)==0:
+            return "None"
+        else:
+            return predictions
 
 def demo(cfg):
     """
@@ -139,6 +142,7 @@ def demo(cfg):
                 top_scores.append(pred[mask].tolist())
                 top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
                 predictions.append(top_class)
+            print(predictions)
         for frame in frame_provider.display(task):
             yield frame
 

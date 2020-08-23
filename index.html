@@ -9,6 +9,14 @@
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
         <title>SlowFast</title>
+        <style>
+            #inputF {
+                display: inline-block;
+            }
+            #outputF {
+                display: inline-block;
+            }
+        </style>
     </head>
     <body>
         <div class = "container">
@@ -28,9 +36,18 @@
                         <video autoplay="true" id="videoElement"></video>
                     </div>
                     <div class = 'video'>
+                        <div id="inputF">
+                        <p>input frames:</p>
                         <img id="image" style="background-color:black;">
-                        <br>
+                        </div>
+                        <div id="outputF">
+                        <p>output frames(predictions):</p>
                         <img id="image2" style="background-color:black;">
+                        </div>
+                    </div>
+                    <div>
+                        <p>output text(predictions):</p>
+                        <p id="predictions" style="background-color:grey;"></p>
                     </div>
                 </div><br>
                 <div id="operate">
