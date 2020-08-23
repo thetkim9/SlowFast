@@ -12,33 +12,37 @@
         <style>
             #inputF {
                 display: inline-block;
+                vertical-align: top;
             }
             #outputF {
                 display: inline-block;
+                vertical-align: top;
             }
             #link {
                 display: inline-block;
+                vertical-align: top;
             }
             #logo {
                 display: inline-block;
+                vertical-align: top;
             }
         </style>
     </head>
     <body>
         <div class = "container">
             <div class="jumbotron mt-3">
-
                 <h1>SlowFast</h1>
                 <hr>
                 <div id="link">
                     <A>Github Repo : </A> <A href="https://github.com/thetkim9/SlowFast/tree/webserver"> Github</A>
+                    <br>
                     <A>Ainize 2.0 : </A> <A href="https://webserver-slow-fast-thetkim9.endpoint.ainize.ai"> Ainize</A>
                 </div>
                 <div id="logo">
-                    <img src="{{ url_for('static', filename='logo.png') }}" width="125" height="93">
+                    <img src="{{ url_for('static', filename='logo.png') }}" width="62" height="46">
                 </div>
                 <hr>
-                <p>Fully supported on chrome only.</p>
+                <p>The service works best on google chrome.</p>
                 <p>Make sure that the webcam is turned on and that your browser has allowed access to the camera.</p>
                 <p>Wait at least 10 seconds for outputs to appear since the model input requires a certain number of frames.</p>
                 <hr class="solid">
