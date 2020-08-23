@@ -58,7 +58,10 @@ class Predictor:
                 action detection task.
         """
         if self.cfg.DETECTION.ENABLE:
-            task = self.object_detector(task)
+            try:
+                task = self.object_detector(task)
+            except:
+                pass
 
         frames, bboxes = task.frames, task.bboxes
         if bboxes is not None:
