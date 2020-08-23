@@ -445,7 +445,7 @@ class VideoVisualizer:
             #print(len(preds))
             for pred in preds:
                 #print(pred)
-                mask = pred >= 0.5
+                mask = pred >= 0.1
                 #print(mask)
                 top_scores.append(pred[mask].tolist())
                 top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
