@@ -165,7 +165,7 @@ if __name__ == '__main__':
     cfg = load_config(args)
     # cfg.DEMO.WEBCAM = 0
     cfg.DEMO.WEBCAM = -1
-    cfg.DEMO.INPUT_VIDEO = None
+    cfg.DEMO.INPUT_VIDEO = ""
     cfg.NUM_GPUS = 1
     cfg.TRAIN.ENABLE = False
     cfg.TEST.ENABLE = False
