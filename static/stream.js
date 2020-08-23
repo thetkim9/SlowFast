@@ -41,6 +41,8 @@ var outputFManager;
 
 var outputTManager;
 
+var cals;
+
 var occupant = false;
 
 function videoLoop() {
@@ -107,16 +109,19 @@ startButton.onclick = () => {
                     catch (err) {}
                 })
             }, 1000/FPS);
+            cals = 0;
             outputTManager = setInterval(() => {
                 $.get('setPredictions', function(dict) {
                     try {
                         data = dict['predictions'];
                         if (data!="None") {
+                            cals += 1;
                             text = document.getElementById('predictions').innerHTML;
-                            text = ""
+                            text += cals+".";
                             for (var i = 0; i < data.length; i++) {
-                              text += data[i] + "<br>";
+                              text += data[i] + ", ";
                             }
+                            text += "<br>";
                         }
                     }
                     catch (err) {}
