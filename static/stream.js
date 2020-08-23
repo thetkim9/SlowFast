@@ -98,7 +98,7 @@ startButton.onclick = () => {
                         }
                     }
                     catch (err) {}
-                }
+                })
             }, 1000/FPS);
         }
         else {
