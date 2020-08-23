@@ -127,7 +127,7 @@ def updateFrame():
     if len(frames_out) != 0:
         frame = frames_out.pop(0)
         buff = cv2.imencode('.jpeg', frame)[1]
-        response = base64.encodestring(buff)
+        response = base64.b64encode(buff)
         return response
     else:
         return "None"
