@@ -116,13 +116,13 @@ startButton.onclick = () => {
                         data = dict['predictions'];
                         if (data!="None") {
                             cals += 1;
-                            text = document.getElementById('predictions').innerHTML;
-                            text += cals+".";
+                            text = cals+".";
                             for (var i = 0; i < data.length; i++) {
                               text += data[i] + ", ";
                             }
                             text += "<br>";
-                            console.log(text);
+                            console.log(text)
+                            document.getElementById('predictions').innerHTML += text;
                         }
                     }
                     catch (err) {}
