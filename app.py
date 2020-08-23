@@ -65,7 +65,6 @@ class thread_with_trace(threading.Thread):
 def provide_frame():
     while True:
         try:
-            print("frame pop")
             with lockPro:
                 frame = frames_in.pop(0)
             print("frame in")

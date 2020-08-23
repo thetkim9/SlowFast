@@ -112,7 +112,6 @@ import threading
 lock = threading.Lock()
 
 def put_frame(frame):
-    print("frame in")
     with lock:
         frame_provider.frames_in.append(frame)
 
