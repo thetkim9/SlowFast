@@ -163,5 +163,5 @@ if __name__ == '__main__':
     cfg.DEMO.OUTPUT_FILE = "demo_test/demo_out2.mp4"
     cfg.DEMO.ENABLE = True
     initialize(cfg)
-    ml_processing()
-    #socketio.run(app, host='0.0.0.0')
+    #ml_processing()
+    socketio.run(app, host='0.0.0.0')
