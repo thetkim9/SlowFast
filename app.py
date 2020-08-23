@@ -12,6 +12,7 @@ import threading
 import sys
 sys.path.append('./tools')
 from demo_net import *
+import base64
 
 Payload.max_decode_packets = 50
 
@@ -126,7 +127,7 @@ def updateFrame():
     if len(frames_out) != 0:
         frame = frames_out.pop(0)
         buff = cv2.imencode('.jpeg', frame)[1]
-        response = io.BytesIO(buff).getvalue()
+        response = base64.encodestring(buff)
         return response
     else:
         return "None"

@@ -99,11 +99,8 @@ startButton.onclick = () => {
                 $.get('updateFrame', function(data) {
                     try {
                         if (data!="None") {
-                            const arrayBufferView = new Uint8Array(data);
-                            const blob = new Blob([arrayBufferView], {type: 'image/jpeg'});
-                            const imageUrl = URL.createObjectURL(blob);
-                            console.log(blob);
-                            document.getElementById('image2').src = imageUrl;
+                            print(data)
+                            document.getElementById('image2').src = 'data:image/jpeg;base64,'+data;
                         }
                     }
                     catch (err) {}
