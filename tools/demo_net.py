@@ -124,11 +124,14 @@ def put_frame(frame):
         frame_provider.frames_in.append(frame)
 
 def get_predictions():
+    global predictions
     with lockGet:
         if len(predictions)==0:
             return "None"
         else:
-            return predictions[0]
+            ans = predictions[0][:]
+            predictions = []
+            return ans
 
 def demo(cfg):
     global predictions
