@@ -115,6 +115,7 @@ startButton.onclick = () => {
                     try {
                         data = dict['predictions'];
                         if (data!="None") {
+                            console.log(data);
                             cals += 1;
                             text = document.getElementById('predictions').innerHTML;
                             text += cals+".";

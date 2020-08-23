@@ -128,7 +128,7 @@ def get_predictions():
         if len(predictions)==0:
             return "None"
         else:
-            return predictions
+            return predictions[0]
 
 def demo(cfg):
     global predictions
