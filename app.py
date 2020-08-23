@@ -134,7 +134,6 @@ def updateFrame():
 @app.route('/setPredictions')
 def setPredictions():
     results = get_predictions()
-    print("results:", results)
     return {'predictions': results}
 
 
