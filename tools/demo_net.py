@@ -91,8 +91,10 @@ def run_demo():
             time.sleep(0.02)
             continue
         num_task += 1
-
-        model.put(task)
+        try:
+            model.put(task)
+        except:
+            continue
         try:
             task = model.get()
             num_task -= 1
