@@ -4,7 +4,6 @@
 import numpy as np
 import time
 import torch
-import tqdm
 
 from slowfast.utils import logging
 from slowfast.visualization.async_predictor import AsyncDemo, AsyncVis
@@ -19,6 +18,7 @@ logger = logging.get_logger(__name__)
 
 model = None
 frame_provider = None
+predictions = None
 
 def initialize(cfg):
     print("initialize start")
@@ -111,11 +111,17 @@ def run_demo():
             continue
 
 import threading
-lock = threading.Lock()
+lockF = threading.Lock()
+lockGet = threading.Lock()
+lockPost = threading.Lock()
 
 def put_frame(frame):
-    with lock:
+    with lockF:
         frame_provider.frames_in.append(frame)
+
+def get_prediction():
+    with lockGet:
+        return predictions
 
 def demo(cfg):
     """
@@ -125,6 +131,14 @@ def demo(cfg):
             slowfast/config/defaults.py
     """
     for task in run_demo():
+        top_scores = []
+        predictions = []
+        with lockPost:
+            for pred in task.action_preds:
+                mask = pred >= 0.3
+                top_scores.append(pred[mask].tolist())
+                top_class = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+                predictions.append(top_class)
         for frame in frame_provider.display(task):
             yield frame
 
