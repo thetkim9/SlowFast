@@ -92,7 +92,6 @@ class VideoManager:
                 #print(self.frames_in)
                 with self.lock:
                     frame = self.frames_in.pop(0)
-                print(frame)
                 frames.append(frame)
             except:
                 pass

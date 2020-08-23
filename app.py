@@ -67,7 +67,6 @@ def provide_frame():
         try:
             with lockPro:
                 frame = frames_in.pop(0)
-            print("frame in")
             put_frame(frame)
         except:
             pass
