@@ -144,8 +144,8 @@ def demo(cfg):
         for pred in task.action_preds:
             mask = pred >= 0.3
             top_scores.append(pred[mask].tolist())
-            top_class_index = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
-            top_classes.append(class_names[top_class_index])
+            top_class_indices = torch.squeeze(torch.nonzero(mask), dim=-1).tolist()
+            top_classes.append([class_names[i] for i in top_class_indices])
         with lockPost:
             predictions = top_classes
         for frame in frame_provider.display(task):
